@@ -6,9 +6,13 @@ Regex or Regular expressions are patterns used to match character combinations i
 
 In this tutorial we'll be looking at how the following Regex is used to match an email address:
 
+<!-- ```js 
+var emailRegex = /^([a-z0-9_\.]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+```  -->
+
 ```js 
-var emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
-``` 
+var emailRegex = /\b([a-z])([\w\.]+)([^\W_]+)@([\da-z\.-]+)\.([a-z\.]{1,3})\b/gm;
+```
 
 We'll walk-through each of the components to determine how they work and why we're using them.
 
@@ -28,21 +32,58 @@ We'll walk-through each of the components to determine how they work and why we'
 
 ## Regex Components
 
+<!-- ```js 
+var emailRegex = /^([a-z0-9_\.]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+```  -->
+
 ```js 
-var emailRegex = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+var emailRegex = /\b([a-z])([\w\.]+)([^\W_]+)@([\da-z\.-]+)\.([a-z\.]{1,3})\b/gm;
 ``` 
 
-### Anchors ```^``` and ```$```
+### Anchors ```\b```
 
-```^``` is used to find the start of the string.
+Matches on a word boundary, meaning one side is a word character (like ```\w```) and the other side is not a word character (like a space character).
+
+<!-- ### Anchors ```^``` and ```$``` -->
+
+<!-- ```^``` is used to find the start of the string.
 
 ```$``` is used to find the end of a string.
 
-In our case it will start by looking for a group ```()``` and it will use the OR operator ```[]``` (explained below) to see what the criteria is.
+In our case it will start by looking for a group ```()``` and it will use the OR operator ```[]``` (explained below) to see what the criteria is. -->
 
-### Quantifiers
+### Quantifiers ```+ {}```
 
-### OR Operator
+```+``` Matches a string that has the specified characters on the left side followed by one or more items on the right side.
+
+e.g. in our section of code:
+
+```([\w\.]+) => [\w\.]``` Matches any word character equivalent to ```\w = [a-zA-Z0-9_]``` or ```\.``` matches the character "." one or more times.
+____
+
+```{}``` Sets either an exact amount, min and max, or more than one copies of the sequence before the quantifiers.
+
+e.g. in our section of code:
+
+```([a-z\.]{1,3})``` matches the previous token (```[a-z\.]```) between 1 and 3 times, as many times as possible.
+
+
+### OR Operator ```[] [^...]```
+```[]``` Matches a character that is contained within the brackets.
+
+e.g. in our section of code:
+
+```[a-z]``` Matches the range of lower case letters from "a" to "z".
+
+___
+
+```[^...]``` Matches a character that _is not_ contained within the brakets. 
+
+e.g. in our section of code:
+
+```[^\W_]``` Matches any character that is not present in the list. 
+```\W``` Matches any non-word character (```[^a-zA-Z0-9_]```) and ```_``` matches the character "_".
+
 
 ### Character Classes
 
